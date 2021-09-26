@@ -1,0 +1,17 @@
+<ActionBar title="Lista Todo" icon="" class="action-bar">
+    <ActionItem (tap)="newTodo()">        
+        <Label text="&#xf067;" class="fas icon"></Label>
+    </ActionItem>   
+</ActionBar>
+
+<StackLayout>
+    <GridLayout *ngFor="let todo of todoList" rows="auto" columns="auto, *, auto, auto">
+        <Button *ngIf="!todo.isEditing" row="0" col="0" [text]="todo.done ? '&#xf058;': '&#xf111;'" class="far icon" [class.btn-done]="todo.done" (tap)="todo.done = !todo.done"></Button>
+        
+        <Label *ngIf="!todo.isEditing" row="0" col="1" [text]="todo.name" [class.done]="todo.done" textWrap="true"></Label>
+        <TextField *ngIf="todo.isEditing" row="0" col="1" hint="Ingresa el nuevo todo" [(ngModel)]="todo.name"></TextField>
+        
+        <Button row="0" col="2" [text]="todo.isEditing ? '&#xf00c;':'&#xf304;'" [ngClass]="{'check': todo.isEditing}" class="fas icon" (tap)="todo.isEditing ? doneEditing(todo) : editTodo(todo)"></Button>
+        <Button *ngIf="!todo.isEditing" row="0" col="3" text="&#xf2ed;" class="far icon borrar" (tap)="deleteTodo(todo)"></Button>
+    </GridLayout>
+</StackLayout>
